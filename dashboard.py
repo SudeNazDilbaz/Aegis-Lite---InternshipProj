@@ -101,3 +101,50 @@ st.bar_chart(
     x="IP Address",
     y="Request Count",
 )
+
+st.subheader("Log Viewer")
+
+log_type = st.selectbox(
+    "Select Log Type",
+    ["Access Logs", "Attack Logs"]
+)
+
+if log_type == "Access Logs":
+    selected_logs = access_logs
+else:
+    selected_logs = attack_logs
+
+logs_df = pd.DataFrame(selected_logs)
+
+status_options = ["All"] + sorted(
+    logs_df["status_code"].unique().tolist()
+)
+
+selected_status = st.selectbox(
+    "Filter by Status Code",
+    status_options
+)
+
+if selected_status != "All":
+    logs_df = logs_df[
+        logs_df["status_code"] == selected_status
+    ]
+
+ip_options = ["All"] + sorted(
+    logs_df["ip"].dropna().unique().tolist()
+)
+
+selected_ip = st.selectbox(
+    "Filter by IP Address",
+    ip_options
+)
+
+if selected_ip != "All":
+    logs_df = logs_df[
+        logs_df["ip"] == selected_ip
+    ]
+
+st.dataframe(
+    logs_df,
+    width="stretch"
+)
