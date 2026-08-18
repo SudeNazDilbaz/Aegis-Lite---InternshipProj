@@ -3,6 +3,7 @@ import pandas as pd
 
 from aegis_lite.log_parser import read_log_file
 from aegis_lite.statistics import generate_security_summary
+from aegis_lite.threat_analysis import get_detected_threats
 
 st.set_page_config(
     page_title="Aegis-Lite",
@@ -146,5 +147,30 @@ if selected_ip != "All":
 
 st.dataframe(
     logs_df,
+    width="stretch"
+)
+
+st.subheader("Threat Analysis")
+
+detected_threats = get_detected_threats(attack_logs)
+
+threat_df = pd.DataFrame(detected_threats)
+
+threat_options = ["All"] + sorted(
+    threat_df["Threat Type"].unique().tolist()
+)
+
+selected_threat = st.selectbox(
+    "Filter by Threat Type",
+    threat_options
+)
+
+if selected_threat != "All":
+    threat_df = threat_df[
+        threat_df["Threat Type"] == selected_threat
+    ]
+
+st.dataframe(
+    threat_df,
     width="stretch"
 )
