@@ -11,6 +11,7 @@ detected_threats = get_detected_threats(attack_logs)
 for threat in detected_threats:
     print(
         f"Threat: {threat['Threat Type']} | "
+        f"Severity: {threat['Severity']} | "
         f"IP: {threat['IP Address']} | "
         f"Request: {threat['Request']} | "
         f"Status: {threat['Status Code']}"

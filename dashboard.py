@@ -170,6 +170,20 @@ if selected_threat != "All":
         threat_df["Threat Type"] == selected_threat
     ]
 
+severity_options = ["All"] + sorted(
+    threat_df["Severity"].unique().tolist()
+)
+
+selected_severity = st.selectbox(
+    "Filter by Severity",
+    severity_options
+)
+
+if selected_severity != "All":
+    threat_df = threat_df[
+        threat_df["Severity"] == selected_severity
+    ]
+
 st.dataframe(
     threat_df,
     width="stretch"
