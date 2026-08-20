@@ -1,6 +1,7 @@
 from aegis_lite.threat_detector import detect_threat
 from aegis_lite.brute_force import detect_brute_force
 from aegis_lite.severity import get_threat_severity
+from aegis_lite.recon_detector import detect_reconnaissance
 
 def get_detected_threats(logs: list) -> list:
     detected_threats = []
@@ -33,5 +34,20 @@ def get_detected_threats(logs: list) -> list:
             "Request": "/login",
             "Status Code": 401,
             "Line Number": "-"
+        })
+    
+    recon_results = detect_reconnaissance(
+    logs,
+    threshold=2,
+    )
+    for result in recon_results:
+        detected_threats.append({
+            "Threat Type": "Reconnaissance",
+            "Severity": get_threat_severity("Reconnaissance"),
+            "IP Address": result.get("ip"),
+            "Method": "-",
+            "Request": ", ".join(result.get("paths", [])),
+            "Status Code": "-",
+            "Line Number": None
         })
     return detected_threats

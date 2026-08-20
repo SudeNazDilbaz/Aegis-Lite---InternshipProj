@@ -1,5 +1,6 @@
 from aegis_lite.threat_detector import detect_threat
 from aegis_lite.brute_force import detect_brute_force
+from aegis_lite.recon_detector import detect_reconnaissance
 
 def count_status_codes(logs: list) -> dict:
     status_counts = {}
@@ -49,7 +50,13 @@ def generate_security_summary(
         
     )
 
+    recon_results = detect_reconnaissance(
+        attack_logs,
+        threshold=2,
+    )
+
     threat_counts["Brute Force"] = len(brute_force_results)
+    threat_counts["Reconnaissance"] = len(recon_results)
 
     return {
         "total_access_logs": len(access_logs),

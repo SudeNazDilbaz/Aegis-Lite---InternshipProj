@@ -42,3 +42,26 @@ def create_brute_force_alert(brute_force_result: dict) -> bool:
     )
 
     return send_telegram_alert(message)
+
+def create_recon_alert(recon_result: dict) -> bool:
+    ip = recon_result.get("ip")
+    paths = recon_result.get("paths", [])
+    unique_paths = recon_result.get("unique_paths")
+
+    location = get_ip_location(ip)
+
+    country = location.get("country")
+    city = location.get("city")
+
+    path_text = ", ".join(paths)
+
+    message = (
+        "🚨 Aegis-Lite Security Alert\n\n"
+        "Threat: Reconnaissance\n"
+        f"IP Address: {ip}\n"
+        f"Location: {country}, {city}\n"
+        f"Unique Sensitive Paths: {unique_paths}\n"
+        f"Paths: {path_text}"
+    )
+
+    return send_telegram_alert(message)

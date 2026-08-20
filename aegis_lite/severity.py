@@ -3,6 +3,7 @@ THREAT_SEVERITY = {
     "Cross-Site Scripting (XSS)": "High",
     "Path Traversal": "Medium",
     "Brute Force": "Critical",
+    "Reconnaissance": "Low",
 }
 
 

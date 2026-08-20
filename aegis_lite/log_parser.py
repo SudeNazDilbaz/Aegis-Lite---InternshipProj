@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 
 
 LOG_PATTERN = re.compile(
@@ -36,10 +37,6 @@ def parse_log_line(line: str) -> dict | None:
         log_data["response_size"] = 0
 
     return log_data
-
-
-from pathlib import Path
-
 
 def read_log_file(file_path: str) -> list[dict]:
     """

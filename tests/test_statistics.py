@@ -18,10 +18,13 @@ print(attack_status_counts)
 
 print("\n========== THREAT STATISTICS ==========\n")
 
-threat_counts = count_threats(attack_logs)
+summary = generate_security_summary(
+    access_logs,
+    attack_logs,
+)
 
 print("Detected Threats:")
-print(threat_counts)
+print(summary["threat_counts"])
 
 print("\n========== TOP IP STATISTICS ==========\n")
 
