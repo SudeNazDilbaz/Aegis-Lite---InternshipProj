@@ -12,6 +12,7 @@ for threat in detected_threats:
     print(
         f"Threat: {threat['Threat Type']} | "
         f"Severity: {threat['Severity']} | "
+        f"Risk Score: {threat['Risk Score']}/100 | "
         f"IP: {threat['IP Address']} | "
         f"Request: {threat['Request']} | "
         f"Status: {threat['Status Code']}"
